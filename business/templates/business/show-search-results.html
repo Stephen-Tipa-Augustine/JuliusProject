@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Query Result
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Query result</h1>
+{% endblock %}
+
+
+{% block mainContent %}
+
+    <!-- Search Results Start -->
+    <div class="row justify-content-center section-padding" id="search-results">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>Presenting you,</span>
+                            <h2>The Search Results</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if searchResults|length != 0 %}
+                        {% for list in searchResults %}
+                            <div class="col-12 col-sm-6 col-lg-4">
+                                <div class="single-features-area mb-50">
+                                    <img src="{{ list.logo.url }}" alt="">
+                                    <!-- Price -->
+                                    <div class="price-start">
+                                        <p>{{ list.name }}</p>
+                                    </div>
+                                    <div class="feature-content d-flex align-items-center justify-content-between">
+                                        <div class="feature-title">
+                                            <h5>{{ list.category }}</h5>
+                                            <p style="padding-bottom: 1em">{{ list.tag }}</p>
+                                            <a class="fa-line" href="{% url 'business:listing-details' slug=list.slug %}"><i style="color: deeppink" class="fa fa-heart-o" aria-hidden="true">View Details</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+                        <div class="col-12 justify-content-center">
+                            <h3>Sorry!<br>Try another keyword, for that we have no results to show you.</h3>
+                        </div>
+                    {% endif %}
+
+                </div>
+                <!-- More Btn -->
+                <div class="row justify-content-center">
+                    <div class="room-btn pt-20">
+                        <a href="{% url 'business:categories' %}" class="btn view-btn1">View All Businesses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Search Results End -->
+
+{% endblock %}

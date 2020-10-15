@@ -1,0 +1,81 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block title %}
+ About Us
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">About Us</h1>
+{% endblock %}
+
+{% block mainContent %}
+<!-- About Details Start -->
+        <div class="about-details section-padding2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle section-tittle5 mb-80">
+                            <span>About our company</span>
+                            <p>We perform our services to the satisfaction of our customers. This site has been created to allow people seeking for
+            businesses around the globe to find them in one click other than browsing from several results returned by the search
+            engines. We have included some of the popular searches, we as well have given the privilege to our users with
+            user accounts to add listings to our list such that other people looking for similar businesses can find them much
+            easily.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About Details End -->
+
+{% endblock %}
+
+{% block popularBusiness %}
+<!-- Popular Locations Start -->
+        <div class="popular-location section-padding30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>Most visited Business Sites</span>
+                            <h2>Popular Businesses</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if popular|length == 0 %}
+                        <div class="col-12">
+                        <h3 style="text-align: center; color: burlywood">
+                            No views in this section since our store is empty currently!
+                        </h3>
+                        </div>
+                    {% else %}
+                        {% for list in popular %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-location mb-30">
+                            <div class="location-img">
+                                <img src="{{ list.logo.url }}" alt="">
+                            </div>
+                            <div class="location-details">
+                                <p style="color: red">{{ list.name }}</p>
+                                <a href="{% url 'business:listing-details' slug=list.slug %}" class="location-btn">65 <i class="ti-plus"></i>View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <!-- More Btn -->
+                <div class="row justify-content-center">
+                    <div class="room-btn pt-20">
+                        <a href="{% url 'business:categories' %}" class="btn view-btn1">View All Places</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popular Locations End -->
+{% endblock %}

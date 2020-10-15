@@ -1,0 +1,192 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+ Blog Category Content
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Blog Category Content</h1>
+{% endblock %}
+
+{% block mainContent %}
+<!--================Blog Area =================-->
+        <section class="blog_area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar" style="padding-bottom: 4em;">
+                            <h2 style="text-align: center">Showing you category contents</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 mb-5 mb-lg-0">
+                        <div class="blog_left_sidebar">
+                            {% if categoryContent|length == 0 %}
+                                <article class="blog_item">
+                                <div class="blog_item_img">
+                                    <a href="#" class="blog_item_date">
+                                        <h3>Sorry! this Blog category has no content yet</h3>
+                                    </a>
+                                </div>
+                                </article>
+                            {% else %}
+                                {% for blog in categoryContent %}
+                                <article class="blog_item" style="background-color: lavender; padding-bottom: 2em">
+                                <div class="blog_item_img">
+                                    <a href="#" class="blog_item_date">
+                                        <h3 style="color: deeppink">{{ blog.date }}</h3>
+                                    </a>
+                                </div>
+
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="{% url 'business:blog-details' slug=blog.slug %}">
+                                        <h2 style="color: deeppink">{{ blog.name }}</h2>
+                                    </a>
+                                    <p>{{ blog.overview }}</p>
+                                    <ul class="blog-info-link">
+                                        <li><a href="#"><i class="fa fa-user"></i> Category: {{ blog.category }}</a></li>
+                                        <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
+                                    </ul>
+                                </div>
+                            </article>
+                            {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <form action="{% url 'business:blog-query-results' %}" method="post">
+                                    {% csrf_token %}
+                                   <div class="form-group">
+                                      <div class="input-group mb-3">
+                                         <input type="text" name="keyword" class="form-control" placeholder='Search Keyword'
+                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                                         <div class="input-group-append">
+                                            <button class="btns" type="button"><i class="ti-search"></i></button>
+                                         </div>
+                                      </div>
+                                   </div>
+                                   <button class="btn dorne-btn"
+                                      type="submit">Search</button>
+                                </form>
+                            </aside>
+
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <h4 class="widget_title">Category</h4>
+                                <ul class="list cat-list">
+                                   <li>
+                                      <a href="{% url 'business:blog-category-content' slug='All Categories' %}" class="d-flex">
+                                         <p style="color: rosybrown">All Categories</p>
+                                      </a>
+                                   </li>
+                                    <li>
+                                      <a href="{% url 'business:blog-category-content' slug='Restaurant Food' %}" class="d-flex">
+                                         <p style="color: rosybrown">Restaurant Food</p>
+                                      </a>
+                                   </li>
+                                    <li>
+                                      <a href="{% url 'business:blog-category-content' slug='Travel News' %}" class="d-flex">
+                                         <p style="color: rosybrown">Travel News</p>
+                                      </a>
+                                   </li>
+                                    <li>
+                                      <a href="{% url 'business:blog-category-content' slug='Modern Technology' %}" class="d-flex">
+                                         <p style="color: rosybrown">Modern Technology</p>
+                                      </a>
+                                   </li>
+                                    <li>
+                                      <a href="{% url 'business:blog-category-content' slug='Products' %}" class="d-flex">
+                                         <p style="color: rosybrown">Products</p>
+                                      </a>
+                                   </li>
+                                    <li>
+                                      <a href="{% url 'business:blog-category-content' slug='Inspirational' %}" class="d-flex">
+                                         <p style="color: rosybrown">Inspirational</p>
+                                      </a>
+                                   </li>
+                                    <li>
+                                      <a href="{% url 'business:blog-category-content' slug='Health Care' %}" class="d-flex">
+                                         <p style="color: rosybrown">Health Care</p>
+                                      </a>
+                                   </li>
+
+                                </ul>
+                            </aside>
+
+                            <aside class="single_sidebar_widget popular_post_widget">
+                                <h3 class="widget_title">Recent Post</h3>
+                                {% if recentBlogs|length == 0 %}
+                                    <div class="media post_item">
+                                       <div class="media-body">
+                                          <a href="#">
+                                             <h3>It's unfortunate</h3>
+                                          </a>
+                                          <p>We have no recent posts to show</p>
+                                       </div>
+                                    </div>
+                                 {% else %}
+                                    {% for recentBlog in recentBlogs %}
+                                        <div class="media post_item">
+                                           <img src="{{ recentBlog.photo.url }}" class="img-fluid" height="80" width="80" alt="post">
+                                           <div class="media-body">
+                                              <a href="{% url 'business:blog-details' slug=recentBlog.slug %}">
+                                                 <h3>{{ recentBlog.name }}</h3>
+                                              </a>
+                                              <p>{{ recentBlog.date }}</p>
+                                           </div>
+                                            </div>
+                                    {% endfor %}
+                                 {% endif %}
+                            </aside>
+                            <aside class="single_sidebar_widget tag_cloud_widget">
+                                <h4 class="widget_title">Tag Clouds</h4>
+                                <ul class="list">
+                                    <li>
+                                        <a href="#">project</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">love</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">technology</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">travel</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">restaurant</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">life style</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">design</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">illustration</a>
+                                    </li>
+                                </ul>
+                            </aside>
+
+                            <aside class="single_sidebar_widget newsletter_widget">
+                                <h4 class="widget_title">Newsletter</h4>
+
+                                <form action="{% url 'business:add-user-to-mailing-list' %}" method="post">
+                                    {% csrf_token %}
+                                   <div class="form-group">
+                                      <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''"
+                                         onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                   </div>
+                                   <button class="btn dorne-btn"
+                                      type="submit">Subscribe</button>
+                                </form>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================Blog Area =================-->
+{% endblock %}

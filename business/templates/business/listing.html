@@ -1,0 +1,253 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Listing
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Business Listing</h1>
+{% endblock %}
+
+{% block mainContent %}
+<!-- listing Area Start -->
+        <div class="dorne-listing-destinations-area section-padding-100-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading dark text-center">
+                            {% if showQueries %}
+                                <h2><a href="#search-results" title="Your results">
+                                    <i style="color: darkorange" class="fas fa-level-down-alt">GoTo Search Results</i>
+                                </a></h2>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Left content -->
+                    <div class="col-xl-4 col-lg-4 col-md-6" style="background-color: cornflowerblue">
+                        <div class="row">
+                            <div class="col-12">
+                                    <div class="small-section-tittle2 mb-45">
+                                    <h4>What are you Looking For?</h4>
+                                    <h4>Advanced Filter</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Job Category Listing start -->
+                        <form action="{% url 'business:listing' %}" method="post" id="advance-filter">
+                            {% csrf_token %}
+                            <div class="category-listing mb-50">
+                            <!-- single one -->
+                            <div class="single-listing">
+                                <!-- input -->
+                                <div class="input-form">
+                                    <input type="text" name="keyword" class="single-input" placeholder="What are you finding?">
+                                </div>
+                                <!-- Select job items start -->
+                                <div class="select-job-items1">
+                                    <select class="custom-select" name="category">
+                                        <option value="">Choose categories</option>
+                                        <option value="All">All</option>
+                                        <option value="service Business">Service Business</option>
+                                        <option value="Merchandising Business">Merchandising Business</option>
+                                        <option value="Manufacturing Business">Manufacturing Business</option>
+                                    </select>
+                                </div>
+                                <!--  Select job items End-->
+                                <!-- Select job items start -->
+                                <div class="select-job-items2">
+                                    <select class="custom-select" name="form">
+                                        <option value="">Choose Forms</option>
+                                        <option value="All">All</option>
+                                        <option value="Sole Proprietorship">Sole Proprietorship</option>
+                                        <option value="Partnership">Partnership</option>
+                                        <option value="Corporation">Corporation</option>
+                                        <option value="Limited Liability Company">Limited Liability Company</option>
+                                        <option value="Cooperative">Cooperative</option>
+                                    </select>
+                                </div>
+                                <!--  Select job items End-->
+                                <!-- Select job items start -->
+                                <div class="select-job-items2">
+                                    <select class="custom-select" name="tag">
+                                        <option value="">Select Tag</option>
+                                        <option value="All">All</option>
+                                        <option value="very popular">very popular</option>
+                                        <option value="popular">popular</option>
+                                        <option value="not that popular">not that popular</option>
+                                        <option value="just new">just new</option>
+                                    </select>
+                                </div>
+                                <!--  Select job items End-->
+                            </div>
+
+                            <div class="single-listing">
+                                 <button type="submit" class="btn dorne-btn mt-50 bg-white text-dark"><i class="fa fa-search pr-2" aria-hidden="true"></i> Search</button>
+                            </div>
+                        </div>
+                        </form>
+                        <!-- Job Category Listing End -->
+                    </div>
+                    <!-- Right content -->
+                    <div class="col-xl-8 col-lg-8 col-md-6">
+                        {% if showQueries %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h6 style="text-align: center; color: deeppink; padding-bottom: 2em"><strong>{{ queries|length }} Query Result Returned</strong></h6>
+                            </div>
+                        </div>
+                        <!-- listing Details Stat-->
+                        <div class="listing-details-area" id="search-results">
+                            <div class="container">
+                                <div class="row">
+                                    {% if queries|length == 0 %}
+                                        <div class="col-12">
+                                            <p style="text-align: center">Sorry!<br />We seem not to be having results for your query,<br />please try another keyword</p>
+                                        </div>
+                                    {% else %}
+                                        {% for list in queries %}
+                                            <div class="col-12 col-sm-6 col-lg-4">
+                                                <div class="single-features-area mb-50">
+                                                    <img src="{{ list.logo.url }}" alt="">
+                                                    <!-- Price -->
+                                                    <div class="price-start">
+                                                        <p>{{ list.name }}</p>
+                                                    </div>
+                                                    <div class="feature-content d-flex align-items-center justify-content-between">
+                                                        <div class="feature-title">
+                                                            <h5>{{ list.category }}</h5>
+                                                            <p style="padding-bottom: 1em">{{ list.tag }}</p>
+                                                            <a class="fa-line" href="{% url 'business:listing-details' slug=list.slug %}"><i style="color: deeppink" class="fa fa-heart-o" aria-hidden="true">View Details</i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- listing Details End -->
+                        {% else %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h6 style="text-align: center; color: deeppink; padding-bottom: 2em"><strong>{{ listings|length }} Listings available</strong></h6>
+                            </div>
+                        </div>
+                        <!-- listing Details Stat-->
+                        <div class="listing-details-area">
+                            <div class="container">
+                                <div class="row">
+                                    {% if listings|length == 0 %}
+                                        <div class="col-12">
+                                            <p style="text-align: center">Sorry!<br />We seem not to be having results for you,<br />Please Click on the "add listing tab on the navigation top bar to include a new business"</p>
+                                        </div>
+                                    {% else %}
+                                        {% for list in listings %}
+                                            <div class="col-12 col-sm-6 col-lg-4">
+                                                <div class="single-features-area mb-50">
+                                                    <img src="{{ list.logo.url }}" alt="">
+                                                    <!-- Price -->
+                                                    <div class="price-start">
+                                                        <p>{{ list.name }}</p>
+                                                    </div>
+                                                    <div class="feature-content d-flex align-items-center justify-content-between">
+                                                        <div class="feature-title">
+                                                            <h5>{{ list.category }}</h5>
+                                                            <p style="padding-bottom: 1em">{{ list.tag }}</p>
+                                                            <a class="fa-line" href="{% url 'business:listing-details' slug=list.slug %}"><i style="color: deeppink" class="fa fa-heart-o" aria-hidden="true">View Details</i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- listing Details End -->
+                        {% endif %}
+                        <!--Pagination Start  -->
+                        <div class="pagination-area pt-70 text-center">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="single-wrap d-flex justify-content-center">
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-start">
+                                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                                                <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Pagination End  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- listing-area Area End -->
+{% endblock %}
+
+
+{% block popularBusiness %}
+<!-- Popular Locations Start -->
+        <div class="popular-location section-padding30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>Most visited Business Sites</span>
+                            <h2>Popular Businesses</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if popular|length == 0 %}
+                        <div class="col-12">
+                        <h3 style="text-align: center; color: burlywood">
+                            No views in this section since our store is empty currently!
+                        </h3>
+                        </div>
+                    {% else %}
+                        {% for list in popular %}
+                            <div class="col-12 col-sm-6 col-lg-4">
+                                <div class="single-features-area mb-50">
+                                    <img src="{{ list.logo.url }}" alt="">
+                                    <!-- Price -->
+                                    <div class="price-start">
+                                        <p>{{ list.location }}</p>
+                                    </div>
+                                    <div class="feature-content d-flex align-items-center justify-content-between">
+                                        <div class="feature-title">
+                                            <h5>{{ list.name }}</h5>
+                                            <p>{{ list.category }}</p>
+                                        </div>
+                                        <div class="feature-favourite">
+                                            <a href="{% url 'business:listing-details' slug=list.slug %}"><i class="fa fa-heart-o" aria-hidden="true">View Details</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <!-- More Btn -->
+                <div class="row justify-content-center">
+                    <div class="room-btn pt-20">
+                        <a href="{% url 'business:categories' %}" class="btn view-btn1">View All Places</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popular Locations End -->
+{% endblock %}

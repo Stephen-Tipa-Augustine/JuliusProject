@@ -1,0 +1,179 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+<h2>Categories</h2>
+{% endblock %}
+
+{% block mainContent %}
+<!-- Categories Area Start -->
+        <div class="categories-area section-padding30" id="categories">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>We are offering for you</span>
+                            <h2>Featured Categories</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-bed"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a class="category-content" href="#category-content">Service Business</a></h5>
+                                <p>Must explain you this, click the below Link: View Details</p>
+                                <a onclick="viewCategory('Service Business')" href="#category-content">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-drink"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a class="category-content" href="#category-content">Merchandising Business</a></h5>
+                                <p>Must explain you this, click the below Link: View Details</p>
+                                <a onclick="viewCategory('Merchandising Business')" href="#category-content">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-home"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a class="category-content" href="#category-content">Manufacturing Business</a></h5>
+                                <p>Must explain you this, click the below Link: View Details</p>
+                                <a onclick="viewCategory('Manufacturing Business')" href="#category-content">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+
+                 </div>
+            </div>
+        </div>
+        <!-- Categories Area End -->
+
+    <!--Category contents starts here-->
+    <div class="category-listing" id="category-content" style="display: none">
+    <div class="popular-location section-padding30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>Viewing Businesses in Category,</span>
+                            <h2 id="category-heading">Category name</h2>
+                        </div>
+                    </div>
+                </div>
+                {% for key, category in category_content.items %}
+                    <div id="{{ key }}" style="display:none;">
+                        <div class="row">
+                    {% if category|length == 0 %}
+                        <div class="col-12">
+                        <h3 style="text-align: center"><strong>Sorry!<br>This category has no entries yet.</strong></h3>
+                        </div>
+                    {% else %}
+                        {% for list in category %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-location mb-30">
+                            <div class="location-img">
+                                <img src="{{ list.logo.url }}" alt="">
+                            </div>
+                            <div class="location-details">
+                                <p>{{ list.name }}</p>
+                                <a href="#" class="location-btn">65 <i class="ti-plus"></i>{{ list.location }}</a>
+                            </div>
+                        </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                        <!-- More Btn -->
+                        <div class="row justify-content-center">
+                            <div class="room-btn pt-20">
+                                <a onclick="closeCategory('{{ key }}')" href="#categories" class="btn view-btn1">Close Category Content</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function viewCategory(categoryName) {
+        let container = document.getElementById("category-content");
+        let category = document.getElementById("category-heading");
+        let listContainer = document.getElementById(categoryName);
+        listContainer.style.display = 'block';
+        category.textContent = categoryName;
+        container.style.display = "block";
+    }
+
+    function closeCategory(categoryName) {
+        let container = document.getElementById("category-content");
+        let listContainer = document.getElementById(categoryName);
+        listContainer.style.display = 'none';
+        container.style.display = "none";
+    }
+    </script>
+    <!--Category contents stops here-->
+{% endblock %}
+
+
+{% block popularBusiness %}
+<!-- Popular Locations Start -->
+        <div class="popular-location section-padding30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Section Tittle -->
+                        <div class="section-tittle text-center mb-80">
+                            <span>Most visited Business Sites</span>
+                            <h2>Popular Businesses</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if popular|length == 0 %}
+                        <div class="col-12">
+                        <h3 style="text-align: center; color: burlywood">
+                            No views in this section since our store is empty currently!
+                        </h3>
+                        </div>
+                    {% else %}
+                        {% for list in popular %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-location mb-30">
+                            <div class="location-img">
+                                <img src="{{ list.logo.url }}" alt="">
+                            </div>
+                            <div class="location-details">
+                                <p>{{ list.name }}</p>
+                                <p><small>In {{ list.location }}</small></p>
+                                <a href="{% url 'business:listing-details' slug=list.slug %}" class="location-btn">65 <i class="ti-plus"></i>View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <!-- More Btn -->
+                <div class="row justify-content-center">
+                    <div class="room-btn pt-20">
+                        <a href="{% url 'business:categories' %}" class="btn view-btn1">View All Places</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popular Locations End -->
+{% endblock %}

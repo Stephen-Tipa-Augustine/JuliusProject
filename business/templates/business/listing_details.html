@@ -1,0 +1,94 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Listing Details
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Listing Details</h1>
+{% endblock %}
+
+{% block mainContent %}
+<!-- Listing caption start-->
+        <div class="listing-caption section-padding2">
+            <div class="container">
+                <div class="row" style="padding-bottom: 5em">
+                    <div class="col-12 justify-content-center" style="background: red">
+                        <h1 class="area-heading" style="text-align: center">Business Description</h1>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="feature-img">
+                            <img class="img-fluid" src="{{ listing.logo.url }}" alt="Business Logo/Image">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <h4 class="md-20"><strong>Business Title: </strong>{{ listing.name }}</h4>
+                        <h4 class="md-20"><strong>Business Form: </strong>{{ listing.form }}</h4>
+                        <h4 class="md-20"><strong>Business Category: </strong>{{ listing.category }}</h4>
+                        <h4 class="md-20"><strong>Business Location: </strong>{{ listing.location }}</h4>
+                        <h4 class="md-20">This Business is {{ listing.tag }}</h4>
+                        <h3>Overview</h3>
+                        <p class="md-30">{{ listing.overview }}</p>
+                        <h4>Check This Business In The Below Link.</h4>
+                        <a href="{{ listing.address }}" target="_blank">
+                            <i style="color: darkorange" class="fas fa-level-down-alt">Visit Business</i>
+                        </a>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Contact From -->
+                <!-- From -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h3 class="mb-40">Massage </h3>
+                        <!-- Form -->
+                        <form action="{% url 'business:listing-details' slug=listing.slug%}" method="post" class="form-contact contact_form mb-80">
+                        {% csrf_token %}
+                        <div class="row">
+                            {% for field in contactCreationForm %}
+                            {% if field.html_name == "name" or field.html_name == "email"%}
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <p>
+                                          {{ field }}<br>
+                                          {% for error in field.errors %}
+                                            <p style="color: red">{{ error }}</p>
+                                          {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <p>
+                                          {{ field }}<br>
+                                          {% for error in field.errors %}
+                                            <p style="color: red">{{ error }}</p>
+                                          {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mt-3">
+                                   <button type="submit" class="btn dorne-btn">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Listing caption End-->
+
+{% endblock %}

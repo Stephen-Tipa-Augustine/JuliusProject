@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+Privacy
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Our Policies</h1>
+{% endblock %}
+
+{% block mainContent %}
+<!-- Start Sample Area -->
+		<section class="sample-text-area">
+			<div class="container box_1170">
+				<div class="row">
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-sm-8" id="privacy">
+                        <h3 class="text-heading">User Privacy</h3>
+                        <p class="sample-text">
+                            The privacy of our users is the primacy concern on our working table, dailing we ask ourselves
+                            how can we offer the best privacy to our users and our team always come up
+                            with new and innovative ideas.
+                            We won't share them on this beautiful platform, but we will love to inform our users that
+                            their information, personal data, emails, and any other private data that
+                            we ask for is stored safely and watched over day and night to ensure that it does not go
+                            for malicious usages.
+                            Enjoy our services.
+                            incase of any query please use the contact Tab <a style="color: dodgerblue" href="{% url 'business:contact' %}">Check Here</a>
+                            to reach to us.
+                        </p>
+                    </div>
+                    <div class="col-sm-3">
+
+                    </div>
+                </div>
+			</div>
+		</section>
+		<!-- End Sample Area -->
+{% endblock %}

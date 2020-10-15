@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+ Add To Listing
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Business Listing Creation Page</h1>
+{% endblock %}
+
+{% block mainContent %}
+<div class="row justify-content-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-contact comment-form">
+                    <form action="{% url 'business:add-listing' %}" method="post" class="creation-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in listingCreationForm %}
+                            <div class="col-12 form-group" style="text-align: center; align-items: center">
+                                <p>
+                                  {{ field.label_tag }}<br>
+                                  {{ field }}<br>
+                                  {% if field.help_text %}
+                                    <small style="color: grey">{{ field.help_text }}</small><br>
+                                  {% endif %}
+                                  {% for error in field.errors %}
+                                    <p style="color: red">{{ error }}</p><br>
+                                  {% endfor %}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" style="align-items: center; text-align: center">
+                            <input type="submit" value="Add-List" class="btn btn-primary btn-lg px-5">
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

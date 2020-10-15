@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+ Fill below form to add new blog
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Blog Creation Page</h1>
+{% endblock %}
+
+{% block mainContent %}
+<div class="row justify-content-center">
+                    <form action="{% url 'business:add-blog' %}" method="post" class="creation-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in blogCreationForm %}
+                        <div class="row">
+                            <div class="col-12 form-group">
+                                <p>
+                                  {{ field.label_tag }}<br>
+                                  {{ field }}<br>
+                                  {% if field.help_text %}
+                                    <small style="color: grey">{{ field.help_text }}</small><br>
+                                  {% endif %}
+                                  {% for error in field.errors %}
+                                    <p style="color: red">{{ error }}</p><br>
+                                  {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="submit" value="Add-Blog" class="btn btn-primary btn-lg px-5">
+                        </div>
+                    </div>
+                </form>
+</div>
+{% endblock %}
