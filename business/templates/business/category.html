@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block title %}
-<h2>Categories</h2>
+ Categories
+{% endblock %}
+
+{% block pageHeading %}
+ <h1 style="color: red">Business Categories</h1>
 {% endblock %}
 
 {% block mainContent %}
@@ -13,7 +17,7 @@
                     <div class="col-lg-12">
                         <!-- Section Tittle -->
                         <div class="section-tittle text-center mb-80">
-                            <span>We are offering for you</span>
+                            <span>Explore this out</span>
                             <h2>Featured Categories</h2>
                         </div>
                     </div>
@@ -23,11 +27,12 @@
                         <div class="single-cat text-center mb-50">
                             <div class="cat-icon">
                                 <span class="flaticon-bed"></span>
+                                <a href="#"> <img src="{% static 'img/gallery/hero_category1.png' %}" alt=""></a>
                             </div>
                             <div class="cat-cap">
                                 <h5><a class="category-content" href="#category-content">Service Business</a></h5>
                                 <p>Must explain you this, click the below Link: View Details</p>
-                                <a onclick="viewCategory('Service Business')" href="#category-content">View Details</a>
+                                <a onclick="viewCategory('Service Business')" class="btn-info" href="#category-content">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -35,11 +40,12 @@
                         <div class="single-cat text-center mb-50">
                             <div class="cat-icon">
                                 <span class="flaticon-drink"></span>
+                                <a href="#"> <img src="{% static 'img/gallery/hero_category2.png' %}" alt=""></a>
                             </div>
                             <div class="cat-cap">
                                 <h5><a class="category-content" href="#category-content">Merchandising Business</a></h5>
                                 <p>Must explain you this, click the below Link: View Details</p>
-                                <a onclick="viewCategory('Merchandising Business')" href="#category-content">View Details</a>
+                                <a onclick="viewCategory('Merchandising Business')" class="btn-info" href="#category-content">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -47,11 +53,12 @@
                         <div class="single-cat text-center mb-50">
                             <div class="cat-icon">
                                 <span class="flaticon-home"></span>
+                                <a href="#"> <img src="{% static 'img/gallery/hero_category3.png' %}" alt=""></a>
                             </div>
                             <div class="cat-cap">
                                 <h5><a class="category-content" href="#category-content">Manufacturing Business</a></h5>
                                 <p>Must explain you this, click the below Link: View Details</p>
-                                <a onclick="viewCategory('Manufacturing Business')" href="#category-content">View Details</a>
+                                <a onclick="viewCategory('Manufacturing Business')" class="btn-info" href="#category-content">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -127,53 +134,4 @@
     }
     </script>
     <!--Category contents stops here-->
-{% endblock %}
-
-
-{% block popularBusiness %}
-<!-- Popular Locations Start -->
-        <div class="popular-location section-padding30">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <!-- Section Tittle -->
-                        <div class="section-tittle text-center mb-80">
-                            <span>Most visited Business Sites</span>
-                            <h2>Popular Businesses</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    {% if popular|length == 0 %}
-                        <div class="col-12">
-                        <h3 style="text-align: center; color: burlywood">
-                            No views in this section since our store is empty currently!
-                        </h3>
-                        </div>
-                    {% else %}
-                        {% for list in popular %}
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-location mb-30">
-                            <div class="location-img">
-                                <img src="{{ list.logo.url }}" alt="">
-                            </div>
-                            <div class="location-details">
-                                <p>{{ list.name }}</p>
-                                <p><small>In {{ list.location }}</small></p>
-                                <a href="{% url 'business:listing-details' slug=list.slug %}" class="location-btn">65 <i class="ti-plus"></i>View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% endif %}
-                </div>
-                <!-- More Btn -->
-                <div class="row justify-content-center">
-                    <div class="room-btn pt-20">
-                        <a href="{% url 'business:categories' %}" class="btn view-btn1">View All Places</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Popular Locations End -->
 {% endblock %}

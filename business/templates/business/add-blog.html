@@ -11,7 +11,8 @@
 
 {% block mainContent %}
 <div class="row justify-content-center">
-                    <form action="{% url 'business:add-blog' %}" method="post" class="creation-form" enctype="multipart/form-data">
+    <div class="container">
+        <form action="{% url 'business:add-blog' %}" method="post" class="creation-form" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in blogCreationForm %}
                         <div class="row">
@@ -35,5 +36,6 @@
                         </div>
                     </div>
                 </form>
+    </div>
 </div>
 {% endblock %}
